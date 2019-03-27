@@ -20,7 +20,11 @@ class Gpu_model extends \Model {
 		$this->rs['revision_id'] = '';
 		$this->rs['rom_revision'] = '';
 		$this->rs['metal'] = 0;
-
+		
+		if ($serial) {
+			$this->retrieve_record($serial);
+		}
+		
 		$this->serial_number = $serial;
 	}
 	
