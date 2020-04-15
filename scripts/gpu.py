@@ -59,6 +59,8 @@ def flatten_gpu_info(array):
                 device['slot_name'] = obj[item]
             elif item == 'spdisplays_ndrvs':
                 device['ndrvs'] = obj[item]
+            elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily21':
+                device['metal'] = 5
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily14':
                 device['metal'] = 4
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily13':
