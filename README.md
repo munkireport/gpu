@@ -3,7 +3,8 @@ GPU module
 
 Details information on GPUs.
 
-Database:
+Table Schema
+-----
 * model - varchar(255) - model of the GPU
 * vendor - varchar(255) - GPU vendor and vendor ID
 * vram - varchar(255) - dedicated video memory

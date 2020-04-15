@@ -73,28 +73,14 @@ class Gpu_model extends \Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
-        		
-		$typeList = array(
-			'model' => '',
-			'vendor' => '',
-			'vram' => '',
-			'pcie_width' => '',
-			'slot_name' => '',
-			'device_id' => '',
-			'gmux_version' => '',
-			'efi_version' => '',
-			'revision_id' => '',
-			'rom_revision' => '',
-			'metal' => '',
-		);
-		
+
 		foreach ($myList as $device) {
 			// Check if we have a model
 			if( ! array_key_exists("model", $device)){
 				continue;
 			}
             
-			foreach ($typeList as $key => $value) {
+			foreach ($this->rs as $key => $value) {
 				$this->rs[$key] = $value;
 				if(array_key_exists($key, $device))
 				{
