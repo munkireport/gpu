@@ -11,6 +11,9 @@
     "metal3": "Supported, GPUFamily1 v3",
     "metal4": "Supported, GPUFamily1 v4",
     "metal5": "Supported, GPUFamily2 v1",
+    "metal6": "Supported, GPUFamily macOS 2",
+    "metal7": "Supported, GPUFamily Apple 7",
+    "metal8": "Supported, GPUFamily macOS 1",
     "vram": "Video Memory",
     "vram_short": "VRAM",
     "vram_shared": "Shared Video Memory",
@@ -22,5 +25,7 @@
     "gmux_version": "gMux Version",
     "efi_version": "EFI Driver Version",
     "revision_id": "Revision ID",
-    "rom_revision": "ROM Revision"
+    "rom_revision": "ROM Revision",
+    "num_cores": "Number of Cores",
+    "num_cores_short": "Cores"
 }

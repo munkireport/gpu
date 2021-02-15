@@ -17,5 +17,7 @@ Table Schema
 * revision_id - varchar(255) - Revision ID
 * rom_revision - varchar(255) - ROM version of GPU
 * metal - int(11) - What version of Metal supported on GPU
+* num_cores - int(11) - Number of GPU cores
+
 
 
