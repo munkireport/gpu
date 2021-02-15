@@ -15,6 +15,7 @@
 			<th data-i18n="gpu.model" data-colname='gpu.model'></th>
 			<th data-i18n="gpu.vendor" data-colname='gpu.vendor'></th>
 			<th data-i18n="gpu.vram_short" data-colname='gpu.vram'></th>
+			<th data-i18n="gpu.num_cores_short" data-colname='gpu.num_cores'></th>
 			<th data-i18n="gpu.pcie_width" data-colname='gpu.pcie_width'></th>
 			<th data-i18n="gpu.slot_name" data-colname='gpu.slot_name'></th>
 			<th data-i18n="gpu.metal" data-colname='gpu.metal'></th>
@@ -100,15 +101,22 @@
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Metal supported
-	        	var metal=$('td:eq(7)', nRow).html();
+	        	var metal=$('td:eq(8)', nRow).html();
+	        	metal = metal == '8' ? i18n.t('gpu.metal8') :
+	        	metal = metal == '7' ? i18n.t('gpu.metal7') :
+	        	metal = metal == '6' ? i18n.t('gpu.metal6') :
 	        	metal = metal == '5' ? i18n.t('gpu.metal5') :
 	        	metal = metal == '4' ? i18n.t('gpu.metal4') :
 	        	metal = metal == '3' ? i18n.t('gpu.metal3') :
 	        	metal = metal == '2' ? i18n.t('gpu.metal2') :
 	        	metal = metal == '1' ? i18n.t('gpu.metal1') :
 	        	(metal === '0' ? i18n.t('no') : '')
-	        	$('td:eq(7)', nRow).html(metal)
+	        	$('td:eq(8)', nRow).html(metal)
 
+				// Cores
+	        	var cores=$('td:eq(5)', nRow).html();
+				cores = cores == '0' ? '' : cores
+	        	$('td:eq(5)', nRow).html(cores)
 		    }
 	    });
 

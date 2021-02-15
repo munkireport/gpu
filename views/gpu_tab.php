@@ -25,6 +25,15 @@ $(document).on('appReady', function(){
                         if (d[prop] == ''){
                            // Do nothing for empty values to blank them
                         }
+                        else if(prop == 'metal' && d[prop] == 8){
+                           rows = rows + '<tr><th>'+i18n.t('gpu.'+prop)+'</th><td>'+i18n.t('gpu.metal8')+'</td></tr>';
+                        }
+                        else if(prop == 'metal' && d[prop] == 7){
+                           rows = rows + '<tr><th>'+i18n.t('gpu.'+prop)+'</th><td>'+i18n.t('gpu.metal7')+'</td></tr>';
+                        }
+                        else if(prop == 'metal' && d[prop] == 6){
+                           rows = rows + '<tr><th>'+i18n.t('gpu.'+prop)+'</th><td>'+i18n.t('gpu.metal6')+'</td></tr>';
+                        }
                         else if(prop == 'metal' && d[prop] == 5){
                            rows = rows + '<tr><th>'+i18n.t('gpu.'+prop)+'</th><td>'+i18n.t('gpu.metal5')+'</td></tr>';
                         }
@@ -42,6 +51,9 @@ $(document).on('appReady', function(){
                         }
                         else if(prop == 'metal' && d[prop] == 0){
                            rows = rows + '<tr><th>'+i18n.t('gpu.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+                        }
+                        else if(prop == 'num_cores' && (d[prop] == 0 || d[prop] == null)){
+                           rows = rows;
                         }
                         else {
                             rows = rows + '<tr><th>'+i18n.t('gpu.'+prop)+'</th><td>'+d[prop]+'</td></tr>';

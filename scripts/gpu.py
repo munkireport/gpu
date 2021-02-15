@@ -55,10 +55,18 @@ def flatten_gpu_info(array):
                 device['vram'] = obj[item]
             elif item == 'sppci_model':
                 device['model'] = obj[item]
+            elif item == 'sppci_cores':
+                device['num_cores'] = obj[item]
             elif item == 'sppci_slot_name':
                 device['slot_name'] = obj[item]
             elif item == 'spdisplays_ndrvs':
                 device['ndrvs'] = obj[item]
+            elif item == 'spdisplays_metalfamily' and obj[item] == 'spdisplays_mtlgpufamilymac1':
+                device['metal'] = 8
+            elif item == 'spdisplays_metalfamily' and obj[item] == 'spdisplays_mtlgpufamilyapple7':
+                device['metal'] = 7
+            elif item == 'spdisplays_metalfamily' and obj[item] == 'spdisplays_mtlgpufamilymac2':
+                device['metal'] = 6
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily21':
                 device['metal'] = 5
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily14':
