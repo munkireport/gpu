@@ -1,4 +1,4 @@
-#!/usr/local/munkireport/munkireport-python2
+#!/usr/local/bin/python3
 
 """
 GPU  info for munkireport.
@@ -19,7 +19,10 @@ def get_gpu_info():
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
     try:
-        plist = plistlib.readPlistFromString(output)
+        try:
+            plist = plistlib.readPlistFromString(output)
+        except AttributeError as e:
+            plist = plistlib.loads(output)
         # system_profiler xml is an array
         sp_dict = plist[0]
         items = sp_dict['_items']
@@ -83,16 +86,6 @@ def flatten_gpu_info(array):
 
 def main():
     """Main"""
-    # Create cache dir if it does not exist
-    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
-    if not os.path.exists(cachedir):
-        os.makedirs(cachedir)
-
-    # Skip manual check
-    if len(sys.argv) > 1:
-        if sys.argv[1] == 'manualcheck':
-            print 'Manual check: skipping'
-            exit(0)
 
     # Get results
     result = dict()
@@ -100,10 +93,13 @@ def main():
     result = flatten_gpu_info(info)
     
     # Write GPU results to cache
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
     output_plist = os.path.join(cachedir, 'gpuinfo.plist')
-    plistlib.writePlist(result, output_plist)
-    #print plistlib.writePlistToString(result)
-
+    try:
+        plistlib.writePlist(result, output_plist)
+    except:
+        with open(output_plist, 'wb') as fp:
+            plistlib.dump(result, fp, fmt=plistlib.FMT_XML)
 
 if __name__ == "__main__":
     main()
