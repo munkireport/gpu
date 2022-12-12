@@ -1,10 +1,10 @@
 	<div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="gpu-models-widget">
-		<div class="panel-heading" data-container="body" >
-			<h3 class="panel-title"><i class="fa fa-desktop"></i>
+	<div class="card" id="gpu-models-widget">
+		<div class="card-header" data-container="body" >
+			<i class="fa fa-desktop"></i>
 			    <span data-i18n="gpu.widgettitle"></span>
-			    <list-link data-url="/show/listing/gpu/gpu"></list-link>
-			</h3>
+			    <a href="/show/listing/gpu/gpu" class="pull-right"><i class="fa fa-list"></i></a>
+			
 		</div>
 		<div class="list-group scroll-box"></div>
 	</div><!-- /panel -->

@@ -1,5 +1,6 @@
 #!/usr/local/munkireport/munkireport-python3
 
+
 """
 GPU  info for munkireport.
 Will return all details about connected GPUs and video cards
