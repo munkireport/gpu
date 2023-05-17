@@ -11,6 +11,10 @@ import os
 import plistlib
 import sys
 
+sys.path.insert(0, '/usr/local/munki')
+sys.path.insert(0, '/usr/local/munkireport')
+
+from munkilib import FoundationPlist
 
 def get_gpu_info():
     '''Uses system profiler to get GPU info for this machine.'''
@@ -31,7 +35,7 @@ def get_gpu_info():
     except Exception:
         return {}
 
-def flatten_gpu_info(array):
+def flatten_gpu_info(array, localization):
     '''Un-nest GPUs, return array with objects with relevant keys'''
     out = []
     for obj in array:
@@ -66,24 +70,42 @@ def flatten_gpu_info(array):
             elif item == 'spdisplays_ndrvs':
                 device['ndrvs'] = obj[item]
             elif item == 'spdisplays_metalfamily' and obj[item] == 'spdisplays_mtlgpufamilymac1':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 8
             elif item == 'spdisplays_metalfamily' and obj[item] == 'spdisplays_mtlgpufamilyapple7':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 7
             elif item == 'spdisplays_metalfamily' and obj[item] == 'spdisplays_mtlgpufamilymac2':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 6
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily21':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 5
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily14':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 4
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily13':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 3 
             elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily12':
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 2
             elif item == 'spdisplays_metal' and (obj[item] == 'spdisplays_supported' or obj[item] == 'spdisplays_metalfeaturesetfamily11'):
+                device['metal_version'] = get_metal_version(obj[item], localization)
                 device['metal'] = 1
+            elif item == 'spdisplays_mtlgpufamilysupport' :
+                try:
+                    device['metal_version'] = localization[obj[item]].strip()
+                except KeyError as error:
+                    device['metal_version'] = obj[item].strip() 
         out.append(device)
     return out
     
+def get_metal_version(metal_version, localization):
+    try:
+        return localization[metal_version].strip()
+    except KeyError as error:
+        return metal_version.strip() 
 
 def main():
     """Main"""
@@ -91,7 +113,24 @@ def main():
     # Get results
     result = dict()
     info = get_gpu_info()
-    result = flatten_gpu_info(info)
+
+    # Read in English localizations from SystemProfiler
+    if os.path.isfile('/System/Library/SystemProfiler/SPDisplaysReporter.spreporter/Contents/Resources/en.lproj/Localizable.strings'):
+        localization = FoundationPlist.readPlist('/System/Library/SystemProfiler/SPDisplaysReporter.spreporter/Contents/Resources/en.lproj/Localizable.strings')
+    elif os.path.isfile('/System/Library/SystemProfiler/SPDisplaysReporter.spreporter/Contents/Resources/English.lproj/Localizable.strings'):
+        localization = FoundationPlist.readPlist('/System/Library/SystemProfiler/SPDisplaysReporter.spreporter/Contents/Resources/English.lproj/Localizable.strings')
+    elif os.path.isfile('/System/Library/SystemProfiler/SPDisplaysReporter.spreporter/Contents/Resources/Localizable.loctable'):
+        localization_dict = FoundationPlist.readPlist('/System/Library/SystemProfiler/SPDisplaysReporter.spreporter/Contents/Resources/Localizable.loctable')
+        if "en" in localization_dict:
+            localization = localization_dict["en"]
+        elif "English" in localization_dict:
+            localization = localization_dict["English"]
+        else:
+            localization = {}
+    else:
+        localization = {}
+
+    result = flatten_gpu_info(info, localization)
     
     # Write GPU results to cache
     cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))

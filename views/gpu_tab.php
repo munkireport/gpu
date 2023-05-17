@@ -14,7 +14,7 @@ $(document).on('appReady', function(){
             // Hide loading message
             $('#gpu-msg').text('');
             
-            var skipThese = ['id','serial_number','model'];
+            var skipThese = ['id','serial_number','model','metal'];
             $.each(data, function(i,d){
 
                 // Generate rows from data
@@ -65,7 +65,7 @@ $(document).on('appReady', function(){
                         .append($('<i>')
                             .addClass('fa fa-desktop'))
                         .append(' '+d.model))
-                    .append($('<div style="max-width:370px;">')
+                    .append($('<div style="max-width:440px;">')
                         .addClass('table-responsive')
                         .append($('<table>')
                             .addClass('table table-striped table-condensed')

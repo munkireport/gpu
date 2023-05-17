@@ -6,6 +6,7 @@
     "model": "Model",
     "vendor": "Vendor",
     "metal": "Metal Support",
+    "metal_version": "Metal Support",
     "metal1": "Supported, GPUFamily1 v1",
     "metal2": "Supported, GPUFamily1 v2",
     "metal3": "Supported, GPUFamily1 v3",

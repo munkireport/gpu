@@ -18,6 +18,8 @@ Table Schema
 * rom_revision - varchar(255) - ROM version of GPU
 * metal - int(11) - What version of Metal supported on GPU
 * num_cores - int(11) - Number of GPU cores
+* metal_version - int(11) - String of Metal support of the GPU
+
 
 
 
